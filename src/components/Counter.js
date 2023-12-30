@@ -1,27 +1,26 @@
-import { useDispatch, useSelector, connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { counterActions } from "../store";
 import classes from "./Counter.module.css";
-import { Component, useState } from "react";
 
 const Counter = () => {
-  const counter = useSelector((state) => state.counter);
-  const show = useSelector((state) => state.showCounter);
-  const [toggleCounter, setToggleCounter] = useState(false);
+  const counter = useSelector((state) => state.counter.counter);
+  const show = useSelector((state) => state.counter.showCounter);
   const dispatch = useDispatch();
 
-  const Increment = () => {
-    dispatch({ type: "increment" });
+  const counterIncreaseHandler = () => {
+    dispatch(counterActions.increment());
   };
 
-  const increaseHandler = () => {
-    dispatch({ type: "increase", amount: 5 });
+  const counterDecreaseHandler = () => {
+    dispatch(counterActions.decrement());
   };
 
-  const Decrement = () => {
-    dispatch({ type: "decrement" });
+  const incrementHandler = () => {
+    dispatch(counterActions.increase(10));
   };
 
-  const toggleCounterHandler = () => {
-    dispatch({ type: "toggle" });
+  const toggleHandler = () => {
+    dispatch(counterActions.toggleCounter());
   };
 
   return (
@@ -29,19 +28,15 @@ const Counter = () => {
       <h1>Redux Counter</h1>
       {show && <div className={classes.value}>{counter}</div>}
       <div style={{ marginBottom: "10px" }}>
-        <button onClick={Increment}>Increment</button>
-        <button onClick={increaseHandler} style={{ marginLeft: "5px" }}>
+        <button onClick={counterIncreaseHandler}>Increment</button>
+        <button onClick={incrementHandler} style={{ marginLeft: "5px" }}>
           Increase by 5
         </button>
-        <button
-          disabled={counter === 0}
-          onClick={Decrement}
-          style={{ marginLeft: "5px" }}
-        >
+        <button onClick={counterDecreaseHandler} style={{ marginLeft: "5px" }}>
           Decrement
         </button>
       </div>
-      <button onClick={toggleCounterHandler}>Toggle Counter</button>
+      <button onClick={toggleHandler}>Toggle Counter</button>
     </main>
   );
 };
@@ -91,4 +86,5 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Counter); */
+
 export default Counter;
